@@ -4,10 +4,12 @@ from llama_index.core import SimpleDirectoryReader
 from llama_index.core import VectorStoreIndex
 import json
 import re
-import logging
 import os
 
-logger = logging.getLogger(__name__)
+API_HOST = "127.0.0.1"
+API_PORT = 5005
+API_URL = f"http://{API_HOST}:{API_PORT}/v1/chat/completions"
+ADDITIONAL_LLM_INSTRUCTION = "" # Can be "/no_think" for QWEN thinking models, so they don't output thinking tags (which breaks the pptx generator).
 
 prompt = """
  You are a power point presentation specialist. You are asked to create
@@ -52,8 +54,9 @@ content_prompt = (
     + prompt_examples
 )
 
-api_key = os.getenv("OPENAI_API_KEY")
+# api_key = os.getenv("OPENAI_API_KEY")
 #logger.info(api_key)
 #print(api_key)
-llm = OpenAI(model="gpt-5", api_key=api_key)
-llm.complete(content_prompt, True)
+# llm = OpenAI(model="gpt-5", api_key=api_key)
+# llm.complete(content_prompt, True)
+
